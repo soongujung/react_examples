@@ -38,6 +38,7 @@ bower_components/*
 ./**/*/navermap.js
 ./navermap/helloworld/src/app/navermap.js
 
+./**/.history
 ./**/.history/*
 ./.history/*
 ./history
