@@ -3,8 +3,8 @@ import logo from './logo.svg';
 import './App.css';
 import {Sidebar} from './components/sidebar/Sidebar.css';
 import {Route,Link} from 'react-router-dom';
-import MainPage from './components/main/MainPage';
-import Search from './components/search/Search';
+import MainPage from './map_example/main/MainPage';
+import Search from './map_example/search/Search';
 // import {Search} from './components/search/Search';
 
 

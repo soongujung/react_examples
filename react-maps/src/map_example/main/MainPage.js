@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import {loadNavermapsScript, NaverMap} from 'react-naver-maps';
+import {Load} from 'load-js';
 // import {NaverMap, RenderAfterNavermapsLoaded} from 'react-naver-maps';
 
 class MainPage extends Component {
@@ -14,9 +15,9 @@ class MainPage extends Component {
             zoomControl : true,
             zoom:2,
             mapTypeId: 'normal',
-            center : navermaps.LatLng(36.4800580, 127.289039), // 126.9861108, 37.4983439
+            center : navermaps.LatLng(36.796501, 127.594225), // 126.9861108, 37.4983439
             zoomControlOptions: {
-                center: new navermaps.LatLng(36.4800580, 127.289039), //36.4203004, 128.317960
+                center: new navermaps.LatLng(36.796501, 127.594225), //36.4203004, 128.317960
                 position: navermaps.Position.TOP_LEFT,
                 style: navermaps.ZoomControlStyle.SMALL
             },
