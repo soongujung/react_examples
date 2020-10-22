@@ -30,22 +30,29 @@ const itemInfo = {
     }
 };
 
-const FoodItem = ({itemKind}) => {
-    console.log('itemKind >>> ', itemKind);
-    console.log('itemInfo >>> ', itemInfo);
+const FoodItem = ({itemKind, onIncrement, onDecrement}) => {
+    // const [itemKind, setItemKind] = useState('');
+    console.log('itemKind >>> ', itemKind)
+    // console.log('itemInfo >>> ', itemInfo);
+    // const [number, setNumber] = useState(0);
+
     const imgSrc = itemInfo[itemKind].img;
     const imgName = itemInfo[itemKind].korDisplay;
+
 
     return (
       <div className="foodItem">
           <img className="foodImg" src={imgSrc} alt="thumbnail"/>
           <span className="displayLabel">{imgName}</span>
           <div className="foodItemButtons">
-              <button> + </button>
-              <button> - </button>
+              {/*<button onClick={onIncrement}> + </button>*/}
+              <button onClick={(e)=>{onIncrement(itemKind)}}> + </button>
+              <button onClick={(e) => {onDecrement(itemKind)}}> - </button>
           </div>
       </div>
     );
 };
+
+
 
 export default FoodItem;
