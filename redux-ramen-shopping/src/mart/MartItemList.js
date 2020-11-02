@@ -12,28 +12,24 @@ class MartItemList extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {
-            RAMEN :0,
-            PA: 0,
-            PEPPER: 0,
-            TOFU: 0
-        }
+        this.state = {}
     }
 
     handleIncrement = (itemKind) => {
-        console.log('(Container, handleIncrement) this.props (handleIncrement) >>> ', this.props);
+        console.log('(Container, handleIncrement) this.props (handleIncrement) >>> ');
         this.props.incrementItem(itemKind);
-        console.log('selected Item >>> ', itemKind);
+
         this.setState({
-            [itemKind]: this.state[itemKind] + 1
+            [itemKind]: (this.state[itemKind] || 0) + 1
         })
     };
 
     handleDecrement = (itemKind) => {
         console.log('(Container, handleIncrement) this.props (handleDecrement) >>> ', this.props);
         this.props.decrementItem(itemKind);
+        console.log('(dec) props >>> ', this.props)
         this.setState({
-            [itemKind]: this.state[itemKind] - 1
+            [itemKind]: (this.state[itemKind] || 0) - 1
         })
     };
 
@@ -57,25 +53,20 @@ class MartItemList extends Component {
                 </div>
                 <hr/>
                 <div>
-                    <p>열라면 :  {this.state.RAMEN} 개</p>
-                    <p>흙대파(단) : {this.state.PA} 개</p>
-                    <p>청양고추 150g : {this.state.PEPPER} 개</p>
-                    <p>[풀무원] 국산 콩 순두부 (350g) : {this.state.TOFU} 개</p>
+                    <p>열라면 :  {this.state.RAMEN || 0} 개</p>
+                    <p>흙대파(단) : {this.state.PA || 0} 개</p>
+                    <p>청양고추 150g : {this.state.PEPPER || 0} 개</p>
+                    <p>[풀무원] 국산 콩 순두부 (350g) : {this.state.TOFU || 0} 개</p>
                 </div>
             </div>
         );
     }
 }
 
-// export default MartItemList;
-
 const mapStateToProps = ({cart}) =>{
-    console.log('mapStateToProps >>> ');
     const temp = {
         ...cart,
-        number: cart.number || 0
     };
-    console.log('temp >>> ', temp);
     return temp;
 }
 

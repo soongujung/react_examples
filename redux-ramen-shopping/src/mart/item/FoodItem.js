@@ -31,14 +31,9 @@ const itemInfo = {
 };
 
 const FoodItem = ({itemKind, onIncrement, onDecrement}) => {
-    // const [itemKind, setItemKind] = useState('');
     console.log('itemKind >>> ', itemKind)
-    // console.log('itemInfo >>> ', itemInfo);
-    // const [number, setNumber] = useState(0);
-
     const imgSrc = itemInfo[itemKind].img;
     const imgName = itemInfo[itemKind].korDisplay;
-
 
     return (
       <div className="foodItem">
@@ -52,7 +47,5 @@ const FoodItem = ({itemKind, onIncrement, onDecrement}) => {
       </div>
     );
 };
-
-
 
 export default FoodItem;
