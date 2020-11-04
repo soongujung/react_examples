@@ -230,7 +230,25 @@ export default counterSlice.reducer
 
 우리는 위와 같은 이벤트 타입들을 가지고 있는 오브젝트들을 항상 직접 만들 수 있다. 하지만 이것은 지루한 작업이다. 게다가, Redux에서 중요한 것은 reducer function 들과 새로운 state를 계산해내기 위한 로직이다.  
 
-Redux Toolkit 은 `createSlice`  함수를 가지고 있는데 이것은 action 의 type string, action creator 함수를 만들어내고 액션 객체들을 생성하는 작업을 담당한다.  
+Redux Toolkit 은 createSlice () 함수를 가지고 있다. createSlice() 함수가 담당하는 작업들은 아래와 같다.
+
+- action의 type string 생성,
+- action creator 생성
+- action object 생성
+
+`Redux Toolkit` 의 createSlice() 함수를 이용하게 되면 위의 action type 생성, creator 생성, action object 생성 등의 작업을 createSlice() 함수가 담당해주기 때문에 프로그래머가 할 일은 아래와 같다.
+
+- slice 에 대해 이름을 지어주고
+- reducer 함수들을 객체에 정의하는 작업들을 해주고  
+  - 객체내에 reducer 함수에 정의한다는 것은 위에서 봤듯이 `{ users: usersReducer, posts: postsReducer, ... }` 와 같은 구문을 의미한다.
+
+ 위의 작업들을 해주고 나면, `Redux Toolkit`  의 createSlice 함수는 위의 slice, reducer 함수 정의 객체 들에 해당하는 action 코드들을 자동으로 생성한다.  이 외에도 덕타이핑을 Redux Toolkit이 어떻게 행동을 뜯어내는지를 설명하는데, 이 부분에 대해서는 내일 부터 다시 정리...
+
+
+
+
+
+Redux Toolkit 은 `createSlice`  함수를 가지고 있는데 이것은 action 의 type string, action creator 함수를 만들어내고 액션 객체들을 생성하는 작업을 담당한다.  다시 한번 정리해보면 Redux Toolkit 은
 
 
 
