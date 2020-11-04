@@ -131,7 +131,9 @@ redux 스토어가 생성될때 redux 스토어는 하나의 `root reducer` 함�
 
 ### 1) rootReducer 함수 정의
 
-각각의 slice reducer 들을 모두 직접 호출하려면 아래와 같은 모양이 된다.
+> rootReducer 함수를 직접 선언하게 되면 어떤 모양일까? 이런 궁금증을 해결해준다. 
+
+각각의 slice reducer 들을 모두 직접 호출하려면 아래와 같은 모양이 된다. 다양한 reducer 함수들을 하나의 root reducer 함수내에 모아두었다. 이 rootReducer 는 오브젝트의 각 키에 대응하는 reducer들을 매핑해주고 있다.
 
 ```javascript
 function rootReducer(state = {}, action) {
@@ -143,13 +145,94 @@ function rootReducer(state = {}, action) {
 }
 ```
 
-각각의 slice reducer 함수를 개별로 호출한다. 그리고 리덕스 state의 특정 slice를 각각의 slice reducer 함수에 전달한다. 그리고 각각의 slice reducer 는 최종적인 리덕스의 state 객체에 각 반환 값을 포함한다.  
+rootReducer는 각각의 slice reducer 함수를 개별로 호출한다. 그리고 리덕스 state의 특정 slice를 전달한다. 이 redux state의 특정 slice 라는 것은 users, posts, comments로 나누어놓은 항목을 약간은 개념적으로 멋있게 설명하기 위해 사용한 비유인듯하다. 조금은 불필요한 비유이긴하다. 그리고 각각의 최종적인 새로운 Redux state object 내에 각각의 반환값을 포함한다.  
+
+
 
 ### 2) combineReducers 활용 (redux 라이브러리) 
+
+> `rootReducer()` 함수를 만들어내는 역할을 한다. 
+
+combineReducers 함수는 redux 에서 제공해주는 함수이다. 위에서 정의한 `rootReducer(state, action)` 함수를 자동으로 생성해준다. 예제를 확인해보자.  
+
+```javascript
+const rootReducer = combineReducers({
+  users: usersReducer,
+  posts: postsReducer,
+  comments: commentsReducer
+})
+```
+
+combineReducers() 함수는 인자(arugument)로 객체를 받아들이는데, 이 객체 내에는 각각의 reducer들을 모두 포함한다(accepts an object full of slice reducers as its argument). 그리고 이것은 action 이 dispatch 될 때마다 각각의 slice reducer 를 호출하는 함수를 리턴한다.   
 
 
 
 ### 3) configureStore
+
+> - configureStore() 함수는 combineReducers() 함수를 호출한다.
+> - 이 configureStore() 함수는 store를 생성하는 역할을 한다.
+> - 아래 예제를 보면 reducer 항목으로 rootReducer를 전달해주는 것을 확인 가능하다.
+> - 2) combineReducer 에서 봤었는데, rootReducer는 combineReducer 가 생성한 객체이자 함수이다.
+
+slice reducer 들의 오브젝트를  `configureStore()` 함수에 전달할때 , configureStore() 함수는 root reducer를 만들기 위해 reducer 들(object 안에 정의해놓은 reducer들)을 `combineReducers()`함수로 전달해준다.   
+
+```javascript
+const store = configureStore({
+  reducer: rootReducer
+})
+```
+
+
+
+# Creating Slice Reducers And Actions
+
+위에서 봤던 Creating The Redux Store 에서는 아래 구문을 통해서 features/counter/counterSlice.js 파일을 import 했었다.
+
+- `import counterReducer from '../features/counter/counterSlice';` 
+
+
+
+counterReducer 함수는 features/counter/counterSlice.js 내에서 생성하는데, 이 counterReducer 를 밖으로 export 해주는 부분의 예제를 살펴보자.
+
+```javascript
+import { createSlice } from '@reduxjs/toolkit'
+
+export const counterSlice = createSlice({
+  name: 'counter',
+  initialState: {
+    value: 0
+  },
+  reducers: {
+    increment: state => {
+      state.value += 1
+    },
+    decrement: state => {
+      state.value -= 1
+    },
+    incrementByAmount: (state, action) => {
+      state.value += action.payload
+    }
+  }
+})
+
+export const { increment, decrement, incrementByAmount } = counterSlice.actions
+
+export default counterSlice.reducer
+```
+
+- `{type: "counter/increment"}`
+- `{type: "counter/decrement"}`
+- `{type: "counter/incrementByAmount"}`
+
+
+
+액션은 보통 type 필드를 가지고 있는 plain object이다. type 필드는 항상 string 타입이어야 한다. 그리고 보통 우리는 action 객체를 생성하고 리턴하는 "action creator" 함수들을 가지고 있다.  
+
+우리는 위와 같은 이벤트 타입들을 가지고 있는 오브젝트들을 항상 직접 만들 수 있다. 하지만 이것은 지루한 작업이다. 게다가, Redux에서 중요한 것은 reducer function 들과 새로운 state를 계산해내기 위한 로직이다.  
+
+Redux Toolkit 은 `createSlice`  함수를 가지고 있는데 이것은 action 의 type string, action creator 함수를 만들어내고 액션 객체들을 생성하는 작업을 담당한다.  
+
+
 
 
 
